@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Заявка успешно создана";
+}
+
+<div class="container mt-5" style=" width:600px;">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Заявка успешно создана!</h4>
+        <p>Ваша заявка успешно отправлена. В ближайшее время с вами свяжется менеджер для уточнения деталей.</p>
+        <hr>
+        <p class="mb-0">Вы можете выйти или подать еще одну заявку.</p>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="Create" class="btn btn-primary">Подать новую заявку</a>
+        <a asp-controller="Account" asp-action="Login" class="btn btn-secondary">Выйти</a>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+﻿@model AdvertisingAgency.Models.Advertising
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<div class="container mt-5" style="width:600px">
+    <h2>Редактирование</h2>
+
+    <form asp-action="Edit" method="post" class="mb-3" data-source="@ViewBag.Source">
+        <!-- Скрытое поле для передачи параметра source -->
+        <input type="hidden" name="source" value="@ViewBag.Source" />
+
+        <div class="form-group">
+            <label asp-for="ProductName">Название продукта</label>
+            <input asp-for="ProductName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="CategoryId">Категория</label>
+            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateStart">Дата начала</label>
+            <input asp-for="DateStart" type="date" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Duration">Длительность (в днях)</label>
+            <input asp-for="Duration" class="form-control" />
+        </div>
+
+        <!-- Информация о клиенте -->
+        <div class="form-group">
+            <label>Клиент</label>
+            <p class="form-control-static">@(Model.client?.Name ?? "Информация о клиенте отсутствует")</p>
+        </div>
+        <div class="form-group">
+            <label>Фамилия клиента</label>
+            <p class="form-control-static">@(Model.client?.Surname ?? "Информация о клиенте отсутствует")</p>
+        </div>
+        <div class="form-group">
+            <label>Номер клиента</label>
+            <p class="form-control-static">@(Model.client?.Phone ?? "Информация о клиенте отсутствует")</p>
+        </div>
+
+        <div class="d-flex justify-content-between mt-3">
+            <button type="submit" class="btn btn-success">
+                Принять
+            </button>
+
+
+            <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+        </div>
+    </form>
+</div>

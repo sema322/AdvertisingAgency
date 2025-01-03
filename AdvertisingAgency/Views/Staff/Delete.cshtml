@@ -1,0 +1,21 @@
+﻿@model AdvertisingAgency.Models.User
+
+@{
+    ViewData["Title"] = "Удалить пользователя";
+}
+
+<div class="container mt-5" style="width:600px">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Вы уверены, что хотите удалить этого пользователя?</h4>
+        <p>Логин: <strong>@Model.Login</strong></p>
+        <p>Роль: <strong>@Model.Role</strong></p>
+    </div>
+
+    <form asp-action="Delete" class="mt-3">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a asp-action="Index" class="btn btn-secondary">Назад</a>
+    </form>
+</div>

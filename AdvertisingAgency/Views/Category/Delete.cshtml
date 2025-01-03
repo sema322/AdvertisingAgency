@@ -1,0 +1,20 @@
+﻿@model AdvertisingAgency.Models.Category
+
+@{
+    ViewData["Title"] = "Категории рекламы";
+}
+
+<div class="container mt-5" style="width:600px">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Вы уверены, что хотите удалить эту категорию?</h4>
+        <p>Название: <strong>@Model.Name</strong></p>
+    </div>
+
+    <form asp-action="Delete" class="mt-3">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a asp-action="Index" class="btn btn-secondary">Назад</a>
+    </form>
+</div>

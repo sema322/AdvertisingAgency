@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AdvertisingAgency.Models.Advertising>
+
+@{
+    ViewData["Title"] = "Реклама";
+}
+
+<div class="container mt-5">
+    <div class="d-flex align-items-center mb-4">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary me-3">Назад</a>
+        <h2>@ViewData["Title"]</h2>
+    </div>
+
+    @if (Model.Any())
+    {
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Название продукта</th>
+                    <th>Категория</th>
+                    <th>Дата начала</th>
+                    <th>Длительность</th>
+                    <th>Имя клиента</th>
+                    <th>Фамилия клиента</th>
+                    <th>Телефон клиента</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="@(item.IsActive ? "background-color: orange; color: black;" : "")">
+                        <td>@item.ProductName</td>
+                        <td>@item.category.Name</td>
+                        <td>@item.DateStart.ToShortDateString()</td>
+                        <td>@item.Duration дней</td>
+                        <td>@item.client.Name</td>
+                        <td>@item.client.Surname</td>
+                        <td>@item.client.Phone</td>
+                        <td>
+                            @if (!item.IsActive)
+                            {
+                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить эту заявку?');" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                </form>
+                                <a asp-action="Edit" asp-route-id="@item.Id" asp-route-source="AdvertisingIndex" class="btn btn-primary">Редактировать</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            Реклам пока нет.
+        </div>
+    }
+</div>

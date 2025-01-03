@@ -1,0 +1,52 @@
+﻿@using System.Security.Claims
+@model IEnumerable<AdvertisingAgency.Models.Client>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ComputerStore.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container-fluid d-flex align-items-center justify-content-center flex-column" style="min-height: 100vh;">
+        <main role="main" class="mt-5">
+            <div class="card">
+                <div class="card-body ps-5 pe-4">
+                    <div class="d-flex" style="gap:10px">
+                        <a href="@Url.Action("Login", "Account")" class="btn btn-secondary">Назад</a>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                        {
+                            <form method="post" asp-controller="Home" asp-action="Client">
+                                <button class="btn btn-secondary" type="submit">Клиенты</button>
+                            </form>
+                            <form method="post" asp-controller="Home" asp-action="Category">
+                                <button class="btn btn-secondary" type="submit">Категории</button>
+                            </form>
+                            <form method="post" asp-controller="Home" asp-action="AdvRequest">
+                                <button class="btn btn-secondary" type="submit">Заявки</button>
+                            </form>
+                            <form method="post" asp-controller="Home" asp-action="Advertising">
+                                <button class="btn btn-secondary" type="submit">Реклама</button>
+                            </form>
+                        } 
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <form method="post" asp-controller="Home" asp-action="Staff">
+                                <button class="btn btn-secondary" type="submit">Работники</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
