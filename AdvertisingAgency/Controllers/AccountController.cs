@@ -53,8 +53,19 @@ namespace AdvertisingAgency.Controllers
             }
         }
 
-        
-            
+        private async Task AuthenticateAsync(User user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim (ClaimTypes.NameIdentifier, user. Id. ToString()),
+                new Claim (ClaimsIdentity.DefaultNameClaimType, user. Login),
+                new Claim(ClaimTypes.Role, user.Role)
+            };
+
+            var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        }
+
         public async Task<IActionResult> LogoutAsync()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
