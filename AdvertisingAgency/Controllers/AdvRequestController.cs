@@ -63,6 +63,20 @@ namespace AdvertisingAgency.Controllers
                 return View(advertising);
             }
 
+            if (advertising.DateStart < DateTime.Today)
+            {
+                ModelState.AddModelError("DateStart", "Дата начала не может быть в прошлом.");
+                ViewBag.categories = await _context.Categories.ToListAsync();
+                return View(advertising);
+            }
+
+            if (advertising.Duration < 1)
+            {
+                ModelState.AddModelError("Duration", "Количество дней должно быть больше или равно 1.");
+                ViewBag.categories = await _context.Categories.ToListAsync();
+                return View(advertising);
+            }
+
             advertising.ClientId = client.Id;
             advertising.category = await _context.Categories.FindAsync(advertising.CategoryId);
             advertising.IsActive = false;

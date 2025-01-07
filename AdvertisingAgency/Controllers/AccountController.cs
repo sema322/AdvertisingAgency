@@ -92,7 +92,7 @@ namespace AdvertisingAgency.Controllers
                 return View("Register", model);
             }
 
-            // Проверка на существующего пользователя
+
             var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Login == model.Login);
             if (existingUser != null)
             {
@@ -100,7 +100,6 @@ namespace AdvertisingAgency.Controllers
                 return View("Register", model);
             }
 
-            // Создание нового пользователя
             var user = new User
             {
                 Login = model.Login,
