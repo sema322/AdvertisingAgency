@@ -33,11 +33,17 @@ namespace AdvertisingAgency.Controllers
                 return View("Login", model);
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == model.Login);
 
             if (user is null)
             {
-                ViewBag.Error = "Некорректные логин и (или) пароль";
+                ModelState.AddModelError(string.Empty, "Пользователь с таким логином не найден.");
+                return View("Login", model);
+            }
+
+            if (user.Password != model.Password)
+            {
+                ModelState.AddModelError(string.Empty, "Неверный пароль.");
                 return View("Login", model);
             }
 
@@ -49,7 +55,7 @@ namespace AdvertisingAgency.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home"); 
+                return RedirectToAction("Index", "Home");
             }
         }
 
