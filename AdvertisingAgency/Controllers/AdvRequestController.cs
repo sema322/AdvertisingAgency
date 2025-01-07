@@ -108,7 +108,6 @@ namespace AdvertisingAgency.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, Advertising advertising)
         {
-
             var existingAdvertising = await _context.Advertisings
                 .Include(a => a.client)
                 .Include(a => a.category)
@@ -119,6 +118,19 @@ namespace AdvertisingAgency.Controllers
                 return NotFound();
             }
 
+            if (advertising.DateStart < DateTime.Today)
+            {
+                ModelState.AddModelError("DateStart", "Дата начала не может быть в прошлом.");
+                ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "Id", "Name");
+                return View(advertising);
+            }
+
+            if (advertising.Duration < 1)
+            {
+                ModelState.AddModelError("Duration", "Количество дней должно быть больше или равно 1.");
+                ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "Id", "Name");
+                return View(advertising);
+            }
 
             existingAdvertising.ProductName = advertising.ProductName;
             existingAdvertising.CategoryId = advertising.CategoryId;
@@ -132,7 +144,6 @@ namespace AdvertisingAgency.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
-
         }
 
 
