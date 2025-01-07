@@ -31,6 +31,9 @@
             </select>
             <span asp-validation-for="Role" class="text-danger"></span>
         </div>
+        <div class="text-danger">
+            @Html.ValidationSummary(true) <!-- Общий список ошибок -->
+        </div>
         <div class="mt-3">
             <button type="submit" class="btn btn-primary">Создать</button>
             <a asp-action="Index" class="btn btn-secondary">Назад</a>

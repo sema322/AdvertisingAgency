@@ -32,21 +32,28 @@ namespace AdvertisingAgency.Controllers
             return View();
         }
 
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(User user)
         {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Login == user.Login);
+            if (existingUser != null)
+            {
+                ModelState.AddModelError("Login", "Пользователь с таким логином уже существует.");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(user);
         }
 
-        
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
